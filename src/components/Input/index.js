@@ -7,6 +7,7 @@ export default function Input({ handleOnChange, value }) {
     <input
       type='number'
       value={value}
+      // TODO:Pasar esto a un metodo en lugar de que este aqui en una arrow function
       onChange={(e) => handleOnChange(e.target.value)}
     />
   );

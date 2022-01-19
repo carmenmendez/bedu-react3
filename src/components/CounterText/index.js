@@ -1,7 +1,6 @@
+//TODO:Remover lo innecesario en este componente
 import React from 'react';
 
-//Controlled component
-// A input that depends of a changing state
 export default function CounterText({ children }) {
   return <div>{children}</div>;
 }
