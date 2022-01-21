@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types';
 
-//TODO:Usar children en lugar de text
-export default function Button({ color = 'gray', text = '', onClick }) {
+//TODO: Change from function to class
+export default function Button({ color = 'gray', children, onClick }) {
   return (
     <button onClick={onClick} type='button' style={{ color }}>
-      {text}
+      {children}
     </button>
   );
 }
 
-//TODO:Agregar propTypes faltante
 Button.propTypes = {
   color: PropTypes.string,
-  text: PropTypes.string.isRequired,
+  children: PropTypes.any,
+  onClick: PropTypes.func,
 };
 
 // export default Button

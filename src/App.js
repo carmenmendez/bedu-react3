@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Button from './components/Button';
 import CounterText from './components/CounterText';
@@ -9,74 +9,76 @@ import Input from './components/Input';
 //     <div>Hello World</div>
 //   );
 // }
-class App extends React.Component {
-  //For using React Refs
-  //For using event listeners
-  // constructor(props) {
-  //   super(props);
 
-  //   console.log('constructor');
+//1. Changed Class declaration to function declaration
+//2. Replace the use of state with hooks
+//3. Replace 'this' instances with the corresponding functional thing
+//4. Remove render
 
-  //   this.state = {
-  //     countDown: 1,
-  //     inputValue: 1,
-  //   };
+function App() {
+  const [countDown, setCountDown] = useState(0);
+  const [inputValue, setInputValue] = useState(1);
+
+  // componentDidMount() {
+  //   console.log('componentDidMount');
   // }
 
-  // TODO: Completar el state faltante aqui
-  state = {};
-
-  componentDidMount() {
+  useEffect(() => {
     console.log('componentDidMount');
-  }
+  }, []);
 
-  handleOnChange = (inputValue) => {
-    // let finalValue = inputValue;
-
-    // if (+inputValue < 1) finalValue = 1;
-    // if (Number(inputValue) > 100) finalValue = 100;
-
-    this.setState({ inputValue });
+  const handleOnChange = (inputValue) => {
+    setInputValue(inputValue);
   };
 
-  //TODO: Usar una sola funcion en lugar de handleSum y handleRest
-  //TODO: Agregar validacion a esa funcion (la validacion que tenemos en handleOnChange)
-  handleSum = () => {
-    this.setState({
-      countDown: Number(this.state.countDown) + Number(this.state.inputValue),
-    });
+  const handleClick = (receivedValue) => {
+    if (receivedValue === '+') {
+      setCountDown(Number(countDown) + Number(inputValue));
+    } else {
+      setCountDown(Number(countDown) - Number(inputValue));
+    }
+
+    //TODO: Refactorizar esto (con la validacion)
+    //TODO: Resolve logic issue on if/else if/else
+    // if (
+    //   receivedValue === '+' &&
+    //   Number(inputValue) + Number(countDown) <= 100
+    // ) {
+    //   this.setState({
+    //     countDown: Number(countDown) + Number(inputValue),
+    //   });
+    // } else if (
+    //   receivedValue === '-' &&
+    //   Number(countDown) - Number(inputValue) >= 0
+    // ) {
+    //   this.setState({
+    //     countDown: Number(countDown) - Number(inputValue),
+    //   });
+    // } else {
+    //   alert('Operador invalido');
+    // }
   };
 
-  handleRest = () => {
-    this.setState({
-      countDown: Number(this.state.countDown) - Number(this.state.inputValue),
-    });
-  };
+  return (
+    <div>
+      {/* TODO:Agregar propTypes a todos los componentes */}
 
-  render() {
-    console.log('this.state: ', this.state);
-    const { countDown, inputValue } = this.state;
+      <Button color='lightblue' onClick={() => handleClick('-')}>
+        -
+      </Button>
 
-    return (
-      <div>
-        {/* TODO:Agregar propTypes a todos los componentes */}
+      <CounterText>{countDown}</CounterText>
 
-        {/* TODO:Cambiar el color del texto de este Button */}
-        <Button onClick={this.handleRest} text='-' />
+      <Button color='red' onClick={() => handleClick('+')}>
+        +
+      </Button>
 
-        <CounterText>{countDown}</CounterText>
+      <br />
+      <br />
 
-        {/* //TODO: Usar children en lugar de text (en este componente de button) */}
-        {/* TODO:Cambiar el color del texto de este Button */}
-        <Button onClick={this.handleSum} text='+' />
-
-        <br />
-        <br />
-
-        <Input handleOnChange={this.handleOnChange} value={inputValue} />
-      </div>
-    );
-  }
+      <Input handleOnChange={handleOnChange} value={inputValue} />
+    </div>
+  );
 }
 
 export default App;
